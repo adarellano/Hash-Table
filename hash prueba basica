@@ -1,0 +1,7 @@
+String data = "adolfoooooooooooooooooooooooooooooooooo";
+        Random random = new Random();
+        int aleatorio = random.nextInt(1000000000);
+        int num1 =  data.length();
+        
+        int key = aleatorio + num1;
+        System.out.println(key);
