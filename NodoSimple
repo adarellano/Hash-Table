@@ -25,7 +25,7 @@ public class NodoSimple<T>{
         this.data = data;
         
     }
-    public static int generateKey(NodoSimple n) {
+    public static int generateKey(NodoSimple n) {  // genera el key para el nodo, buscar mejorar solo lo hace con un String  y es un solo key, debe tener mas de uno, hacer mas de un key en el nodo. 
         String inputString = String.valueOf(n.getData());
         int total = 0;
         String vowels = "aeiou";
