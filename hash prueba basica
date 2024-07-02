@@ -1,7 +1,15 @@
-String data = "adolfoooooooooooooooooooooooooooooooooo";
-        Random random = new Random();
-        int aleatorio = random.nextInt(1000000000);
-        int num1 =  data.length();
-        
-        int key = aleatorio + num1;
-        System.out.println(key);
+
+public static int countLetters(String inputString) {   // funcion que genera un numero para una cadena de caracteres en especifico, el numero no es variable pueden existir colisiones por probar.  
+        int total = 0;
+        String vowels = "aeiou";
+
+        for (char c : inputString.toLowerCase().toCharArray()) {
+            if (vowels.indexOf(c) != -1) {
+                total += 1;
+            } else {
+                total += 2;
+            }
+        }
+
+        return total;
+    }
