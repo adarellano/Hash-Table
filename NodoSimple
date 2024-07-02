@@ -1,0 +1,54 @@
+public class NodoSimple<T>{
+    private NodoSimple<T> pNext;
+    private T data;
+    private int Key;
+    
+    public NodoSimple(T data){
+        this.data = data;
+        this.pNext = null;
+        this.Key = Key;
+    }
+
+    public NodoSimple<T> getpNext() {
+        return pNext;
+    }
+
+    public void setpNext(NodoSimple<T> pNext) {
+        this.pNext = pNext;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+        
+    }
+    public static int generateKey(NodoSimple n) {
+        String inputString = String.valueOf(n.getData());
+        int total = 0;
+        String vowels = "aeiou";
+
+        for (char c : inputString.toLowerCase().toCharArray()) {
+            if (vowels.indexOf(c) != -1) {
+                total += 1;
+            } else {
+                total += 2;
+            }
+        }n.setKey(total);
+        System.out.println("la llave del nodo es: "+n.getKey());
+
+        return total;
+    }
+
+    public int getKey() {
+        return Key;
+    }
+
+    public void setKey(int Key) {
+        this.Key = Key;
+    }
+          
+}  
+    
