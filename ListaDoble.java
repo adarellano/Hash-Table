@@ -1,4 +1,4 @@
-package proyecto2ada;
+package proyecto2;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
