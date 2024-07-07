@@ -9,32 +9,35 @@ package proyecto2;
  * @author Ada
  */
 public class resumen<T> {
-    private String Título;
+
+    private String Titulo;
     private String Autores;
     private String info;
     private String p_clave;
 
-    public resumen(String Título, String Autores, String info, String p_clave) {
-        this.Título = null;
-        this.Autores = null;
-        this.info = null;
-        this.p_clave = null;
+    
+
+    public resumen(String Titulo, String Autores, String info, String p_clave) {
+        this.Titulo = Titulo;
+        this.Autores = Autores;
+        this.info = info;
+        this.p_clave = p_clave;
     }
     
     
 
     /**
-     * @return the Título
+     * @return the Titulo
      */
-    public String getTítulo() {
-        return Título;
+    public String getTitulo() {
+        return Titulo;
     }
 
     /**
-     * @param Título the Título to set
+     * @param Titulo the Titulo to set
      */
-    public void setTítulo(String Título) {
-        this.Título = Título;
+    public void setTitulo(String Titulo) {
+        this.Titulo = Titulo;
     }
 
     /**
@@ -79,8 +82,14 @@ public class resumen<T> {
         this.p_clave = p_clave;
     }
     
-    
+    public void mostrar_resumen(){
+        System.out.println(this.Titulo);
+        System.out.println(this.Autores);
+        System.out.println(this.p_clave);
+      
+    }
+}
     
 
    
-}
+
