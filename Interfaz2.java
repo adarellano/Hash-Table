@@ -547,36 +547,32 @@ private void guardarRutasEnHistorial(String[] rutasArchivos) {
        
     }
     
-    private void search_autorActionPerformed(java.awt.event.ActionEvent evt) { 
-        /// TIENE ERRORES Y NO ESTA TRABAJADO SOBRE EL ARREGLO PRINCIPAL
-
-        
-        final int NUM_RESUMENES = 10;
-
-resumenes R1 = new resumenes("PRUEBA DE BUSQUEDAD DEFINITIVA", "ADOLFO BARBERI", "PIPIPIPIPIPIPIPIPIPIP", "CLAVE");
-resumenes R2 = new resumenes("PRUEBA DE BUSQUEDAD", "VALENTINA ", "OOOOOOYYYYY", "CLAVE");
-resumenes R3 = new resumenes("PRUEBA DE BUSQUEDAD", "JOSE ", "MANO TENGO FE", "CLAVE");
-        System.out.println("EL AUTOR ES"+ String.valueOf(R3.getAutores()));
-resumenes[] tablita = new resumenes[NUM_RESUMENES];
-tablita[3] = R1;
-tablita[0] = R2;
-tablita[5] = R3;
-
-int numResumenesCargados = 3; // Actualizar esta variable cada vez que se agregue un resumen
-int contador = 0;
-String input = "adolfo barberi";
+    private void search_autorActionPerformed(java.awt.event.ActionEvent evt) {
+        int contador = 0;
+       String comparador = "";
+       int num = ListaResumenes.length;
+        while (contador< num){
 
 
-
-while (contador < numResumenesCargados) {
-    if (tablita[contador] != null && input.equalsIgnoreCase(tablita[contador].getAutores())) {
-            tablita[contador].mostrar_resumen();
-    } else {
-        System.out.println(".");
-    }
-    contador++;
-}
-    }
+            if(ListaResumenes[contador]== null){
+//                System.out.println("");
+            }else{
+                comparador = ListaResumenes[contador].getAutores();
+//                System.out.println(comparador);
+                    if(comparador.equalsIgnoreCase(input_buscar.getText())){
+                            lista_para_buscar.setModel(modelo);
+                                modelo.addElement(ListaResumenes[contador].getTitulo());
+                                    input_buscar.setText(""); //este no lo cambie porque no se con que cambiarlo
+         
+                   }else{
+//                   System.out.println(".");
+                }
+            }contador ++;
+            
+            }
+                
+       }
+       
 }
         // TODO add your handling code here:
     }                                            
