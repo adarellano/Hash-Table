@@ -545,7 +545,12 @@ private void guardarRutasEnHistorial(String[] rutasArchivos) {
       
         
        
-    }                                             
+    }
+    
+    private void search_autorActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // TODO add your handling code here:
+    }                                            
+
 
     /**
      * @param args the command line arguments
