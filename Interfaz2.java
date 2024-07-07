@@ -32,6 +32,7 @@ public class Interfaz2 extends javax.swing.JFrame {
     static ListaDoble[] hPClaves = new ListaDoble[50];
     int intHashCal;
     DefaultListModel<String> modelo = new DefaultListModel<>();
+    DefaultListModel<String> modelo2 = new DefaultListModel<>();
     private String[] rutasArchivos = new String[50]; 
     private int contadorArchivos = 0;
     public Interfaz2() {
