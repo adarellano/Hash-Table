@@ -47,31 +47,35 @@ public class tablaHash {
      * @param PClave
      * @param indiceResumen 
      */
-    public static void insertPClave(NodoDoble hashTable[], String PClave, int indiceResumen) {
-        int indice = tablaHash.calcularHash(PClave);
-        if (hashTable[indice].getData().equals(PClave)) {
-            hashTable[indice].getListaAdy().AgregarFinal(Integer.toString (indiceResumen));
-        }
-        else
-        {
-            if (hashTable[indice].getData().equals("")) 
-            {
-                hashTable[indice].setData(PClave);
-                hashTable[indice].getListaAdy().AgregarFinal(Integer.toString (indiceResumen));
-            }
-            else
-            {
-                while (!hashTable[indice].getData().equals(PClave) && !hashTable[indice].getData().equals("")) 
-                    indice = (indice + 1) % MAX_INDEX;
-                if (hashTable[indice].getData().equals(PClave)) 
-                    hashTable[indice].getListaAdy().AgregarFinal(Integer.toString (indiceResumen));
-                else
-                {
-                    hashTable[indice].setData(PClave);
-                    hashTable[indice].getListaAdy().AgregarFinal(Integer.toString (indiceResumen));
+    public static void insertPClave(ListaDoble[] hashTable, String PClave, int indiceResumen) {
+    int indice = tablaHash.calcularHash(PClave);
+    if (hashTable[indice] == null) {
+        hashTable[indice] = new ListaDoble();
+    }
+    NodoDoble primero=  hashTable[indice].getpFirst();
+    for( int p=0; p<hashTable[indice].getSize(); p++){
+    if (primero.equals(PClave)) {
+        primero.getListaAdy().AgregarFinal(Integer.toString(indiceResumen));
+    } else {
+        if (primero.getData().equals("")) {
+            primero.setData(PClave);
+            primero.getListaAdy().AgregarFinal(Integer.toString(indiceResumen));
+        } else {
+            while (!primero.getData().equals(PClave) && !primero.getData().equals("")) {
+                indice = (indice + 1) % MAX_INDEX;
+                if (primero == null) {
+                    primero = new NodoDoble();
                 }
             }
+            if (primero.getData().equals(PClave)) {
+                primero.getListaAdy().AgregarFinal(Integer.toString(indiceResumen));
+            } else {
+                primero.setData(PClave);
+                primero.getListaAdy().AgregarFinal(Integer.toString(indiceResumen));
+            }
+            }
         }
+    }
     }
     
     /**
@@ -96,12 +100,19 @@ public class tablaHash {
      *
      * @param hashTable
      */
-    public static void imprimirElementos(String hashTable[]) {
+    public static void imprimirElementos(ListaDoble[] hashTable) {
         int indice = 1;
-        for (String Elemento : hashTable) {
-            System.out.println(indice + " - " + Elemento);
+        for (ListaDoble Elemento : hashTable) {
+            if(Elemento!= null){
+                NodoDoble aux= Elemento.getpFirst();
+                for(int x=0;x<Elemento.getSize();x++){
+            System.out.println(indice + " - " + aux.getData());
             indice++;
+            aux = aux.getpNext();}
+            
         }
     }
-  
+    }
 }
+
+
