@@ -600,38 +600,44 @@ private void guardarRutasEnHistorial(String[] rutasArchivos) {
     
     private void search_autorActionPerformed(java.awt.event.ActionEvent evt) {
         int contador = 0;
-       String comparador = "";
-       int num = ListaResumenes.length;
+        String comparador = "";
+        int num = ListaResumenes.length;
+        String autores = input_buscar.getText().trim();
         while (contador< num){
 
 
             if(ListaResumenes[contador]== null){
 //                System.out.println("");
             }else{
-                comparador = ListaResumenes[contador].getAutores();
+                comparador = ListaResumenes[contador].getAutores().trim();
 //                System.out.println(comparador);
-                    if(comparador.equalsIgnoreCase(input_buscar.getText())){
-                            lista_para_buscar.setModel(modelo);
-                                modelo.addElement(ListaResumenes[contador].getTitulo());
-                                    input_buscar.setText(""); //este no lo cambie porque no se con que cambiarlo
-         
-                   }else{
+                    if(limpiarCadena(comparador).equalsIgnoreCase(autores)){
+                        Lista_para_buscar.setModel(modelo);
+                        modelo.addElement(ListaResumenes[contador].getTitulo());
+                        input_buscar.setText(""); //este no lo cambie porque no se con que cambiarlo
+                       
+                    }else{
 //                   System.out.println(".");
-                }
+                    }
             }contador ++;
-            
+           
             }
-                
-       }
+               
+    }
        
-}
-        // TODO add your handling code here:
-    }                                            
+    public static String limpiarCadena(String cadena) {
+    // Reemplaza saltos de línea con un espacio y elimina espacios adicionales
+    return cadena.replaceAll("[\\r\\n]+", " ").replaceAll("\\s+", " ").trim();
 
 
-    /**
-     * @param args the command line arguments
-     */
+    }
+
+    public static String limpiarCadena(String cadena) {
+    // Reemplaza saltos de línea con un espacio y elimina espacios adicionales
+    return cadena.replaceAll("[\\r\\n]+", " ").replaceAll("\\s+", " ").trim();
+
+
+    } 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
