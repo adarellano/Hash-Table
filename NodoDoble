@@ -14,14 +14,14 @@ public class NodoDoble<T> {
     private NodoDoble<T> pNext;
     private NodoDoble<T> pPrev;
     private NodoDoble<T> pOriginal;
-    private T data;
+    private String data;
     private boolean visitado;
     private String position;
     private ListaDoble ListaAdya;
 
     
 
-    public  NodoDoble(){
+    public  NodoDoble(String data){
         this.pNext = null;
         this.pPrev = null;
         this.pOriginal = null;
@@ -32,7 +32,9 @@ public class NodoDoble<T> {
         
     }
 
-   
+    NodoDoble() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     /**
      * La función imprime el dato del nodo actual  seguido de la lista de 
      * sus nodos adyacentes.
@@ -64,7 +66,7 @@ public class NodoDoble<T> {
      * @param data El dato que se almacena en el nodo adyacente (puede ser un String)
      */
     public void AgregaAdya(String data) {
-        NodoDoble<T> nuevoNodo = new NodoDoble();
+        NodoDoble<T> nuevoNodo = new NodoDoble(data);
         int columnaactual, filaactual;
         if (ListaAdya.EsVacia()) 
         {
@@ -117,11 +119,11 @@ public class NodoDoble<T> {
         this.pPrev = pPrev;
     }
 
-    public T getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(String data) {
         this.data = data;
     }
 
@@ -137,7 +139,7 @@ public class NodoDoble<T> {
         return ListaAdya;
     }
 
-    public void setListaAdy(T data) {
+    public void setListaAdy(String data) {
         this.ListaAdya = ListaAdya;
         this.data = data;
     }
@@ -156,7 +158,3 @@ public class NodoDoble<T> {
     
    
 }
-    }
-          
-}  
-    
