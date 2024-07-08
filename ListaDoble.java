@@ -10,18 +10,21 @@ package proyecto2;
 /**
  *
  * @author Ada Arellano
+ * @param <T>
  */
 public class ListaDoble<T> {
 
     private NodoDoble pFirst;
     private NodoDoble pLast;
     private int size;
+    private int maxsize;
+    
 
     public ListaDoble() {
         this.pFirst = null;
         this.pLast = null;
         this.size = 0;
-       
+        this.maxsize = 16;
         
 
     }
@@ -51,8 +54,8 @@ public class ListaDoble<T> {
      * @param data  El dato que se almacena en el nodo (puede ser de cualquier tipo genérico T)
      * en este caso String
      */
-     public void AgregarInicio(T data) {
-        NodoDoble nodo = new NodoDoble();
+     public void AgregarInicio(String data) {
+        NodoDoble nodo = new NodoDoble(data);
         if (EsVacia()) {
             nodo.setPosition("00");
             pFirst = nodo;
@@ -76,25 +79,25 @@ public class ListaDoble<T> {
       * 
       * @param data El dato que se almacena en el nodo (puede ser de cualquier tipo genérico T).
       */
-    public void AgregarFinal(T data) {
-        NodoDoble<T> nodo = new NodoDoble();
+    public void AgregarFinal(String data) {
+        NodoDoble<T> nodo = new NodoDoble(data);
         if (EsVacia()) {
-            //nodo.setPosition("00");
+            nodo.setPosition("00");
             pLast = nodo;
             pFirst = nodo;
         } else {
-            //NodoDoble Aux = pLast;
-            //int i=Aux.getPosition().charAt(0)-48;
-            //int j=Aux.getPosition().charAt(1)-48;
-            //j++;
+            NodoDoble Aux = pLast;
+            int i=Aux.getPosition().charAt(0)-48;
+            int j=Aux.getPosition().charAt(1)-48;
+            j++;
             pLast.setpNext(nodo);
-            //nodo.setpLast(pLast);
-            //String Position = String.valueOf(i)+String.valueOf(j);
-            //nodo.setPosition(Position);
+            nodo.setpLast(pLast);
+            String Position = String.valueOf(i)+String.valueOf(j);
+            nodo.setPosition(Position);
             pLast = nodo;
             
         }
-        //size++;
+        size++;
     }
     
     /**
@@ -105,7 +108,7 @@ public class ListaDoble<T> {
      * @param nodoOriginal  El nodo original del cual se copiará el dato.
      */
     public void AgregarNodoFinal(NodoDoble nodoOriginal) {
-        NodoDoble<T> nodo = new NodoDoble();
+        NodoDoble<T> nodo = new NodoDoble(nodoOriginal.getData());
         nodo.setpOriginal(nodoOriginal);
         if (EsVacia()) {
             nodo.setPosition("00");
@@ -192,7 +195,7 @@ public class ListaDoble<T> {
      * @return El dato almacenado en el nodo del índice especificado, o null si 
      * no se encuentra el nodo.
      */
-    public T BuscarDataIndice(int index){
+    public String BuscarDataIndice(int index){
         NodoDoble<T> pAux =this.BuscarIndice(index);
         if (pAux != null){
             return pAux.getData();
@@ -228,7 +231,13 @@ public class ListaDoble<T> {
         this.size = size;
     }
 
- 
+    public int getMaxsize() {
+        return maxsize;
+    }
+
+    public void setMaxsize(int maxsize) {
+        this.maxsize = maxsize;
+    }
 
     public void AgregarFinal(ListaDoble<Character> characters) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
