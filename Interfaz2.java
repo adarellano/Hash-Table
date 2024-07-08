@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import static proyecto2.tablaHash.imprimirElementos;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,13 +29,23 @@ public class Interfaz2 extends javax.swing.JFrame {
     public resumen resumenObj;
     resumen ListaResumenes[] = new resumen[50];
     static String[] hTitulos = new String[50];
-    static ListaDoble[] hPClaves = new ListaDoble[50];
+    static NodoDoble[] hPClaves = new NodoDoble[50];
     int intHashCal;
     DefaultListModel<String> modelo = new DefaultListModel<>();
     DefaultListModel<String> modelo2 = new DefaultListModel<>();
     private String[] rutasArchivos = new String[50]; 
     private int contadorArchivos = 0;
     public Interfaz2() {
+        for (int i=0; i<50; i++)
+            hTitulos[i] = "";
+
+
+        for (int i=0; i<50; i++)
+        {
+            NodoDoble Nodo = new NodoDoble("");
+            Nodo.setListaAdy("");
+            hPClaves[i] = Nodo;
+        }
         initComponents();
     }
 
@@ -77,8 +87,8 @@ public class Interfaz2 extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         agregar_lista = new javax.swing.JButton();
         mostrar_inforesumen = new javax.swing.JButton();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        Lista_resumenes = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        Lista_para_buscar = new javax.swing.JList<>();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -157,6 +167,11 @@ public class Interfaz2 extends javax.swing.JFrame {
         });
 
         search_autor.setText("Buscar por autor");
+        search_autor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search_autorActionPerformed(evt);
+            }
+        });
 
         info_resumen.setColumns(20);
         info_resumen.setRows(5);
@@ -191,10 +206,13 @@ public class Interfaz2 extends javax.swing.JFrame {
         });
 
         mostrar_inforesumen.setText("Mostrar Información del resumen");
+        mostrar_inforesumen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrar_inforesumenActionPerformed(evt);
+            }
+        });
 
-        Lista_resumenes.setColumns(20);
-        Lista_resumenes.setRows(5);
-        jScrollPane6.setViewportView(Lista_resumenes);
+        jScrollPane4.setViewportView(Lista_para_buscar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -247,9 +265,11 @@ public class Interfaz2 extends javax.swing.JFrame {
                         .addComponent(search_autor))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(56, 56, 56)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel4))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(57, 57, 57)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(mostrar_inforesumen)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -259,45 +279,43 @@ public class Interfaz2 extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cargar_resumen)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel5))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(agregar_lista)
-                                .addGap(18, 18, 18)
-                                .addComponent(analizar_resumen)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
-                        .addGap(63, 63, 63)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(input_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(search_pclave)
-                            .addComponent(search_autor))
-                        .addGap(66, 66, 66))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(mostrar_inforesumen)
-                        .addComponent(jLabel4)))
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(agregar_lista)
+                        .addGap(18, 18, 18)
+                        .addComponent(analizar_resumen)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                .addGap(63, 63, 63)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(input_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(search_pclave)
+                    .addComponent(search_autor))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mostrar_inforesumen)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addComponent(salir)
                 .addContainerGap())
@@ -310,9 +328,16 @@ public class Interfaz2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }                                            
 
+    public static boolean ExisteTitulo(String[] hTitulos,String sTitulo){
+        return tablaHash.search(hTitulos, sTitulo);
+        
+    }
+    
+    
     private void cargar_resumenActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        String ruta = "";
-    JFileChooser fc = new JFileChooser();
+    String ruta = System.getProperty("user.dir");
+    JFileChooser fc;
+    fc = new JFileChooser(ruta);
     fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
     FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo","txt");
     fc.setFileFilter(filtro);
@@ -320,8 +345,7 @@ public class Interfaz2 extends javax.swing.JFrame {
     int res = fc.showOpenDialog(this);
     if(res == JFileChooser.APPROVE_OPTION){
         ruta = fc.getSelectedFile().getPath();
-        rutasArchivos[contadorArchivos] = ruta;  // Almacenar la ruta en el array
-        contadorArchivos++; 
+         
         String contenido = obtenerContenidoArchivo(ruta);  // Obtener el contenido del archivo
         String titulo = ObtenerTitulo(contenido);  // Obtener el título
         String autores = ObtenerAutores(contenido);  // Obtener los autores
@@ -329,15 +353,32 @@ public class Interfaz2 extends javax.swing.JFrame {
         String palabrasClave = ObtenerPalabrasClaves(contenido);  // Obtener las palabras clave
         
         resumenObj = new resumen(titulo, autores, resumen, palabrasClave);
+      
+        if (!ExisteTitulo(hTitulos, resumenObj.getTitulo()))
+        {
+            intHashCal = tablaHash.calcularHash(resumenObj.getTitulo());
+            tablaHash.insertData(hTitulos, resumenObj.getTitulo());
+            ListaResumenes[intHashCal] = resumenObj;
+            IncluirPalabrasClaves(hPClaves, resumenObj.getP_clave(), intHashCal);
+
+
+            String cadena_inthashcal = String.valueOf(intHashCal);
+            String titulo_guardado = resumenObj.getTitulo();
+            titulo_cargado.setText(cadena_inthashcal+" - "+titulo_guardado);
+           
+        }else{
+            JOptionPane.showMessageDialog(null, "El resumen ya fue agregado.");
+        }
         
-        
+    /*    
         boolean tituloRepetido = false;
         for (resumen resumenRegistrado : ListaResumenes) {
            
             if (resumenRegistrado != null && resumenRegistrado.getTitulo().equals(titulo)) {
                 
                 tituloRepetido = true;
-                System.out.println("Este resumen ya esta cargado, ingrese otro"); //aun no funciona
+                //System.out.println("Este resumen ya esta cargado, ingrese otro"); //aun no funciona
+                
                 break;
             }
         
@@ -359,13 +400,24 @@ public class Interfaz2 extends javax.swing.JFrame {
             for (int i=0; i<50; i++)
                 hTitulos[i] = "";
             
-                tablaHash.insertData(hTitulos, resumenObj.getTitulo());
+            
+            for (int i=0; i<50; i++)
+            {
+                NodoDoble Nodo = new NodoDoble("");
+                Nodo.setListaAdy("");
+                hPClaves[i] = Nodo;
+            }
+            
+            
+               tablaHash.insertData(hTitulos, resumenObj.getTitulo());
                 ListaResumenes[intHashCal] = resumenObj;
                 IncluirPalabrasClaves(hPClaves, resumenObj.getP_clave(), intHashCal);
-                imprimirElementos(hPClaves);
+                
+                
                 String cadena_inthashcal = String.valueOf(intHashCal);
                 String titulo_guardado = resumenObj.getTitulo();
-                titulo_cargado.setText(cadena_inthashcal+" - "+titulo_guardado); 
+                titulo_cargado.setText(cadena_inthashcal+" - "+titulo_guardado);
+                
                 
             break;
             }
@@ -374,13 +426,23 @@ public class Interfaz2 extends javax.swing.JFrame {
                 
 }
         
-    
+    */
+        
     }
     
     
     }
     
-   
+/**
+ * Lee el contenido de un archivo y lo devuelve como una cadena de texto.
+ *
+ * Esta función toma la ruta de un archivo como parámetro, lee su contenido línea por línea,
+ * y construye una cadena de texto con todo el contenido del archivo, incluyendo saltos de línea.
+ * En caso de que ocurra una excepción de E/S, se registra el error utilizando el logger.
+ *
+ * @param ruta La ruta del archivo a leer.
+ * @return El contenido del archivo como una cadena de texto.
+ */   
 public String obtenerContenidoArchivo(String ruta) {
     StringBuilder contenido = new StringBuilder();
     try (BufferedReader b = new BufferedReader(new FileReader(ruta))) {
@@ -394,6 +456,14 @@ public String obtenerContenidoArchivo(String ruta) {
     return contenido.toString();  // Devolver el contenido del archivo
 }
         
+/**
+ * Muestra el título de un archivo resumen en un componente de la interfaz de usuario.
+ *
+ * Esta función obtiene el título de un objeto de tipo `resumen` y lo muestra
+ * en un componente de la interfaz de usuario denominado `titulo_cargado`.
+ *
+ * @param resumen Un objeto de la clase `resumen` del cual se obtendrá el título.
+ */
 public void mostrar_tituloarchivo(resumen resumen) {
     
     
@@ -403,18 +473,33 @@ public void mostrar_tituloarchivo(resumen resumen) {
    
 }
 
-
+/**
+ * Obtiene la primera palabra del título de un objeto de tipo `resumen`.
+ *
+ * Esta función toma un objeto de la clase `resumen`, obtiene su título, 
+ * y devuelve la primera palabra del mismo.
+ *
+ * @param resumenObj Un objeto de la clase `resumen` del cual se obtendrá el título.
+ * @return La primera palabra del título del objeto `resumen`.
+ */
    public static String primera_palabra(resumen resumenObj){
        
        String [] t = resumenObj.getTitulo().split(" ");
        return t[0];
        
-       
-       
-       
+      
    }
 
-    
+/**
+ * Obtiene el título de un contenido de texto.
+ *
+ * Esta función toma un string que representa el contenido completo de un archivo,
+ * encuentra el índice de la palabra "Autores" y retorna el texto desde el inicio
+ * hasta dicho índice, asumiendo que esta sección representa el título.
+ *
+ * @param sData El contenido del archivo como un string.
+ * @return El título extraído del contenido del archivo.
+ */
     public static String ObtenerTitulo(String sData)
     {
         String sTextoaAutores = "Autores";
@@ -422,6 +507,16 @@ public void mostrar_tituloarchivo(resumen resumen) {
         return (sData.substring(0, intIndex));
     }
     
+/**
+ * Obtiene los autores de un contenido de texto.
+ *
+ * Esta función toma un string que representa el contenido completo de un archivo,
+ * encuentra los índices de las palabras "Autores" y "Resumen", y retorna el texto
+ * entre estos dos índices, asumiendo que esta sección representa los autores.
+ *
+ * @param sData El contenido del archivo como un string.
+ * @return Los autores extraídos del contenido del archivo.
+ */    
     public static String ObtenerAutores(String sData)
     {
         String sTextoAutores = "Autores";
@@ -430,7 +525,16 @@ public void mostrar_tituloarchivo(resumen resumen) {
         int intIndexResumen = sData.indexOf(sTextoResumen);
         return (sData.substring(intIndexAutores, intIndexResumen));
     }
-    
+ /**
+ * Obtiene el resumen de un contenido de texto.
+ *
+ * Esta función toma un string que representa el contenido completo de un archivo,
+ * encuentra los índices de las palabras "Resumen" y "Palabras Claves", y retorna el texto
+ * entre estos dos índices, asumiendo que esta sección representa el resumen.
+ *
+ * @param sData El contenido del archivo como un string.
+ * @return El resumen extraído del contenido del archivo.
+ */   
     public static String ObtenerResumen(String sData)
     {
         String sTextoResumen = "Resumen";
@@ -439,14 +543,33 @@ public void mostrar_tituloarchivo(resumen resumen) {
         int intIndexPalabras = sData.indexOf(sTextoPalabras);
         return (sData.substring(intIndexResumen, intIndexPalabras));
     }
-    
+  /**
+ * Obtiene las palabras clave de un contenido de texto.
+ *
+ * Esta función toma un string que representa el contenido completo de un archivo,
+ * encuentra el índice de la palabra "Palabras Claves" y retorna el texto desde dicho
+ * índice hasta el final del contenido, asumiendo que esta sección representa las palabras clave.
+ *
+ * @param sData El contenido del archivo como un string.
+ * @return Las palabras clave extraídas del contenido del archivo.
+ */  
     public static String ObtenerPalabrasClaves(String sData)
     {
         String sTextoPalabras = "Palabras Claves";
         int intIndexPalabras = sData.indexOf(sTextoPalabras)+sTextoPalabras.length()+2;
         return (sData.substring(intIndexPalabras, sData.length()));
     }
-    public static void IncluirPalabrasClaves (ListaDoble hPClaves[], String ListaNPalabras, int index)
+ /**
+ * Inserta palabras clave en la tabla hash.
+ *
+ * Esta función toma una lista de palabras clave separadas por comas y un índice,
+ * y las inserta en una tabla hash utilizando la función `insertPClave`.
+ *
+ * @param hPClaves La tabla hash representada como un array de NodoDoble.
+ * @param ListaNPalabras Una cadena de texto que contiene las palabras clave separadas por comas.
+ * @param index El índice asociado al resumen donde se encuentran las palabras clave.
+ */
+    public static void IncluirPalabrasClaves (NodoDoble hPClaves[], String ListaNPalabras, int index)
     {
         String[] ListaPalabras = ListaNPalabras.split(",");
         
@@ -458,9 +581,33 @@ public void mostrar_tituloarchivo(resumen resumen) {
     }                                              
 
     private void analizar_resumenActionPerformed(java.awt.event.ActionEvent evt) {                                                 
-    estadisticas();
+        int indiceRSeleccionado = -1;
+        int totalResumen = modelo.getSize();
+        for (int indice=0; indice<totalResumen; indice++)
+        {
+            if (resuemen_cargado.isSelectedIndex(indice))
+            {
+                indiceRSeleccionado = indice;
+                break;
+            }
+        }
+        if (indiceRSeleccionado>-1)
+        {
+            String sTResumen = resuemen_cargado.getSelectedValue();
+            int indiceResumen = Integer.parseInt(sTResumen.substring(0, sTResumen.indexOf(" ")));
+            resumenObj = ListaResumenes[indiceResumen];
+            estadisticas();
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Seleccione el resumen a analizar.");
     }
-    
+/**
+ * Cuenta el número de veces que aparece una palabra clave en un texto dado.
+ *
+ * @param sData El texto en el que se buscará la palabra clave.
+ * @param sPalabraClave La palabra clave que se desea contar en el texto.
+ * @return El número de veces que la palabra clave aparece en el texto.
+ */
     public static int CuentaPalabraClave(String sData, String sPalabraClave)
     {
         boolean bContinuar = true;
@@ -484,6 +631,11 @@ public void mostrar_tituloarchivo(resumen resumen) {
         }
         return nNroPalabras;
     }
+    
+    /**
+ * Genera estadísticas de palabras clave en el resumen y las muestra en un componente de texto.
+ * Cuenta cuántas veces aparece cada palabra clave en el resumen y muestra los resultados en formato de texto.
+ */
     public void estadisticas(){
     String ListaPalabras[];
         
@@ -495,7 +647,7 @@ public void mostrar_tituloarchivo(resumen resumen) {
         NroVecesPalabraClave = CuentaPalabraClave(resumenObj.getInfo(), pclave);
         
         
-        texto_acumulado += "Numero de veces "+ pclave + " en el Resumen: '" + String.valueOf(NroVecesPalabraClave) + "'";
+        texto_acumulado += "Numero de veces "+ pclave + " en el Resumen: '" + String.valueOf(NroVecesPalabraClave) + "'\n";
         
         
         
@@ -511,11 +663,12 @@ public void mostrar_tituloarchivo(resumen resumen) {
     }                                             
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {                                      
-   String nombreArchivo = "Historial.txt";
-   String rutaArchivo = System.getProperty("user.home") + File.separator + "Documents" + File.separator;
+   
+        String nombreArchivo = "Historial.txt";
+        String rutaArchivo = System.getProperty("user.home") + File.separator + "Documents" + File.separator;
 
-    // Crea un objeto File para el archivo de texto
-    File archivo = new File(rutaArchivo + nombreArchivo);
+        // Crea un objeto File para el archivo de texto
+        File archivo = new File(rutaArchivo + nombreArchivo);
 
     try {
         // Crea un objeto FileWriter para escribir en el archivo
@@ -523,17 +676,11 @@ public void mostrar_tituloarchivo(resumen resumen) {
 
         int count=0;
         int numero= ListaResumenes.length;
-         escritor.write("prueba");
-         
-         while(count<numero){
-             if(ListaResumenes[count]==null){
-                 System.out.println(".");
-             }else{
-                 System.out.println("aqui hay algo");
-             }count++;
-         }
-        while(count<numero){
-            if(ListaResumenes[count]!=null){
+
+        while(count<numero)
+        {
+            if(ListaResumenes[count]!=null)
+            {
                 escritor.write(ListaResumenes[count].getTitulo());
                 escritor.write("");
                 escritor.write(ListaResumenes[count].getAutores());
@@ -541,103 +688,156 @@ public void mostrar_tituloarchivo(resumen resumen) {
                 escritor.write(ListaResumenes[count].getP_clave());
                 escritor.write("");
                 escritor.write(ListaResumenes[count].getInfo());
-                escritor.write("");
-                escritor.write("");
-                
-              
-                
-            }else{
-                escritor.write("probando");
-            }count++;
+                escritor.write("\n");
+                escritor.write("\n");
+            }
+            count++;
         }
-        
        
-        
-
-        
         escritor.close();
 
         // Muestra una notificación al usuario
         JOptionPane.showMessageDialog(null, "Datos guardados con éxito en " + rutaArchivo + nombreArchivo);
 
         // Cierra la aplicación
-        System.exit(0);
+        this.dispose();
     } catch (IOException e) {
         // Si se produce un error al crear el archivo, muestra una notificación al usuario
         JOptionPane.showMessageDialog(null, "Error al crear el archivo de texto");
         e.printStackTrace();
     }
-}
-    
-private void guardarRutasEnHistorial(String[] rutasArchivos) {
-    // Crear la carpeta "historial" dentro del directorio del proyecto si no existe
-    File carpetaHistorial = new File("historial");
-    if (!carpetaHistorial.exists()) {
-        carpetaHistorial.mkdirs();
-    }
-
-    // Guardar las rutas en archivos de texto dentro de la carpeta "historial"
-    for (int i = 0; i < rutasArchivos.length; i++) {
-        try {
-            // Crear y escribir en el archivo de texto correspondiente
-            BufferedWriter writer = new BufferedWriter(new FileWriter("historial/archivo" + (i + 1) + ".txt"));
-            writer.write(rutasArchivos[i]);
-            writer.close();
-            // Mensaje de éxito para cada archivo guardado
-            System.out.println("Ruta del archivo " + (i + 1) + " guardada en la carpeta historial");
-        } catch (IOException e) {
-            System.err.println("Error al guardar la ruta del archivo " + (i + 1) + ": " + e.getMessage());
-        }
-    }
+ 
         
     }                                     
 
     private void search_pclaveActionPerformed(java.awt.event.ActionEvent evt) {                                              
-      
+        String PCBuscar;
+        PCBuscar = input_buscar.getText();
+        boolean bContinuar=true;
         
-       
-    }
-    
-    private void search_autorActionPerformed(java.awt.event.ActionEvent evt) {
+        
+        modelo2.clear();
+        info_resumen.setText("");
+        
+        int indiceEstimado = tablaHash.calcularHash(PCBuscar);
+        if (hPClaves[indiceEstimado].getData().equals(PCBuscar))
+        {
+            //Encontro la Palabra Clave
+            //JOptionPane.showMessageDialog(null, "Encontro la palabra clave");
+            ListaDoble listaIndice = hPClaves[indiceEstimado].getListaAdy();
+            NodoDoble nodo = listaIndice.getpFirst();
+            while(bContinuar)
+            {
+                Lista_para_buscar.setModel(modelo2);
+                modelo2.addElement(nodo.getData() + " - " + ListaResumenes[Integer.parseInt(nodo.getData())].getTitulo());
+                nodo = nodo.getpNext();
+                if (nodo == null)
+                    bContinuar = false;
+            }
+        }
+        else
+        {
+            //Sigue buscando en los siguientes nodos.
+            while (!hPClaves[indiceEstimado].getData().equals(PCBuscar) && !hPClaves[indiceEstimado].getData().equals("")) {
+                indiceEstimado = (indiceEstimado + 1) % 50;
+            }
+            if (hPClaves[indiceEstimado].getData().equals(PCBuscar))
+            {
+                //Encontro la Palabra Clave
+                //JOptionPane.showMessageDialog(null, "Encontro la palabra clave");
+                ListaDoble listaIndice = hPClaves[indiceEstimado].getListaAdy();
+                NodoDoble nodo = listaIndice.getpFirst();
+                while(bContinuar)
+                {
+                    Lista_para_buscar.setModel(modelo2);
+                    modelo2.addElement(ListaResumenes[Integer.parseInt(nodo.getData())].getTitulo());
+                    nodo = nodo.getpNext();
+                    if (nodo == null)
+                        bContinuar = false;
+                }
+            }
+            else
+            {
+                //No existe
+                JOptionPane.showMessageDialog(null, "Palabra clave no encontrada.");
+            }
+            
+        }
+    }                                             
+
+    private void search_autorActionPerformed(java.awt.event.ActionEvent evt) {                                             
         int contador = 0;
         String comparador = "";
         int num = ListaResumenes.length;
         String autores = input_buscar.getText().trim();
+        boolean bAlgunResultado = false;
+
+        modelo2.clear();
+        info_resumen.setText("");
+
         while (contador< num){
-
-
             if(ListaResumenes[contador]== null){
 //                System.out.println("");
             }else{
                 comparador = ListaResumenes[contador].getAutores().trim();
+                comparador = limpiarCadena(comparador);
 //                System.out.println(comparador);
-                    if(limpiarCadena(comparador).equalsIgnoreCase(autores)){
-                        Lista_para_buscar.setModel(modelo);
-                        modelo.addElement(ListaResumenes[contador].getTitulo());
-                        input_buscar.setText(""); //este no lo cambie porque no se con que cambiarlo
-                       
+                    if(comparador.contains(autores)){
+                        Lista_para_buscar.setModel(modelo2);
+                        modelo2.addElement(Integer.toString(contador) + " - " + ListaResumenes[contador].getTitulo());
+                        input_buscar.setText("");                         
+                        bAlgunResultado = true;
                     }else{
 //                   System.out.println(".");
-                    }
+                }
             }contador ++;
-           
+            
             }
-               
+        if (!bAlgunResultado)
+            JOptionPane.showMessageDialog(null, "Autor no encontrado.");
     }
-       
+    /**
+ * Limpia una cadena de texto eliminando saltos de línea y espacios adicionales.
+ * Reemplaza todos los saltos de línea con un espacio y elimina espacios en blanco adicionales.
+ *
+ * @param cadena La cadena de texto que se desea limpiar.
+ * @return La cadena de texto limpiada, sin saltos de línea y con espacios adicionales eliminados.
+ */
     public static String limpiarCadena(String cadena) {
     // Reemplaza saltos de línea con un espacio y elimina espacios adicionales
     return cadena.replaceAll("[\\r\\n]+", " ").replaceAll("\\s+", " ").trim();
 
 
-    }
+    }                                            
 
-    public static String limpiarCadena(String cadena) {
-    // Reemplaza saltos de línea con un espacio y elimina espacios adicionales
-    return cadena.replaceAll("[\\r\\n]+", " ").replaceAll("\\s+", " ").trim();
+    private void mostrar_inforesumenActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+        int indiceRSeleccionado = -1;
+        int totalResumen = modelo2.getSize();
+        for (int indice=0; indice<totalResumen; indice++)
+        {
+            if (Lista_para_buscar.isSelectedIndex(indice))
+            {
+                indiceRSeleccionado = indice;
+                break;
+            }
+        }
+        if (indiceRSeleccionado>-1)
+        {
+            String sTResumen = Lista_para_buscar.getSelectedValue();
+            int indiceResumen = Integer.parseInt(sTResumen.substring(0, sTResumen.indexOf(" ")));
+            resumenObj = ListaResumenes[indiceResumen];
+            info_resumen.setText("Titulo: "+resumenObj.getTitulo()+"\n"+"Autores: "+resumenObj.getAutores()+"\n"+"Informacion: "+resumenObj.getInfo()+"\n"+"Palabras claves: "+resumenObj.getP_clave());
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Seleccione un resultado de su búsqueda.");
+        
+        
+        
+    }                                                   
 
-
-    } 
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -671,7 +871,7 @@ private void guardarRutasEnHistorial(String[] rutasArchivos) {
     }
 
     // Variables declaration - do not modify                     
-    private javax.swing.JTextArea Lista_resumenes;
+    private javax.swing.JList<String> Lista_para_buscar;
     private javax.swing.JButton agregar_lista;
     private javax.swing.JToggleButton analizar_resumen;
     private javax.swing.JToggleButton cargar_resumen;
@@ -691,8 +891,8 @@ private void guardarRutasEnHistorial(String[] rutasArchivos) {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTextField jTextField1;
