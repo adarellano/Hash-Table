@@ -511,12 +511,62 @@ public void mostrar_tituloarchivo(resumen resumen) {
     }                                             
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {                                      
-     // Suponiendo que `rutasArchivos` es un array de String con las rutas cargadas en el sistema
-    String[] rutasArchivos = {"ruta1", "ruta2", "ruta3"}; // Reemplazar con las rutas reales
-    guardarRutasEnHistorial(rutasArchivos);
-    // Cerrar la ventana o la aplicación
-    this.dispose(); // Cierra solo la ventana actual
-    // System.exit(0); // Cierra la aplicación completa
+   String nombreArchivo = "Historial.txt";
+   String rutaArchivo = System.getProperty("user.home") + File.separator + "Documents" + File.separator;
+
+    // Crea un objeto File para el archivo de texto
+    File archivo = new File(rutaArchivo + nombreArchivo);
+
+    try {
+        // Crea un objeto FileWriter para escribir en el archivo
+        FileWriter escritor = new FileWriter(archivo);
+
+        int count=0;
+        int numero= ListaResumenes.length;
+         escritor.write("prueba");
+         
+         while(count<numero){
+             if(ListaResumenes[count]==null){
+                 System.out.println(".");
+             }else{
+                 System.out.println("aqui hay algo");
+             }count++;
+         }
+        while(count<numero){
+            if(ListaResumenes[count]!=null){
+                escritor.write(ListaResumenes[count].getTitulo());
+                escritor.write("");
+                escritor.write(ListaResumenes[count].getAutores());
+                escritor.write("");
+                escritor.write(ListaResumenes[count].getP_clave());
+                escritor.write("");
+                escritor.write(ListaResumenes[count].getInfo());
+                escritor.write("");
+                escritor.write("");
+                
+              
+                
+            }else{
+                escritor.write("probando");
+            }count++;
+        }
+        
+       
+        
+
+        
+        escritor.close();
+
+        // Muestra una notificación al usuario
+        JOptionPane.showMessageDialog(null, "Datos guardados con éxito en " + rutaArchivo + nombreArchivo);
+
+        // Cierra la aplicación
+        System.exit(0);
+    } catch (IOException e) {
+        // Si se produce un error al crear el archivo, muestra una notificación al usuario
+        JOptionPane.showMessageDialog(null, "Error al crear el archivo de texto");
+        e.printStackTrace();
+    }
 }
     
 private void guardarRutasEnHistorial(String[] rutasArchivos) {
